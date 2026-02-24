@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Static N Flow – From Raw Waves to Polished Flow</title>
+
+  <!-- Google Fonts: Inter + Montserrat -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            display: ['Montserrat', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            'sf-bg': '#050509',
+            'sf-surface': '#0b0b10',
+            'sf-surface-soft': '#151521',
+            'sf-border': '#262636',
+            'sf-blue': '#38bdf8',
+            'sf-purple': '#a855f7',
+            'sf-orange': '#f97316',
+          },
+          boxShadow: {
+            'sf-glow': '0 0 40px rgba(56,189,248,0.25)',
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    /* ----------------------------------------------------------
+       GLOBAL BACKGROUND
+       ----------------------------------------------------------
+       Place your background image in `./assets` for deployment and
+       update the path below if you rename it.
+       ---------------------------------------------------------- */
+    body {
+      background-color: #020617;
+      background-image: url('assets/c__Users_Moo_AppData_Roaming_Cursor_User_workspaceStorage_1771897996406_images_tylijura-ai-generated-8707111-0ff3f042-de4f-4b29-8a47-190a2e6bbc4b.png');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      color: #e5e7eb;
+    }
+
+    /* Dark overlay + subtle noise over the background image to keep text readable */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background:
+        radial-gradient(circle at top left, rgba(15,23,42,0.9) 0, rgba(15,23,42,0.96) 40%, rgba(0,0,0,0.98) 100%),
+        radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.04) 1px, transparent 0);
+      background-size: auto, 120px 120px;
+      opacity: 0.9;
+      pointer-events: none;
+    }
+
+    .waveform-placeholder {
+      background-image: linear-gradient(
+        to right,
+        rgba(56, 189, 248, 0.1) 0,
+        rgba(168, 85, 247, 0.35) 30%,
+        rgba(249, 115, 22, 0.5) 60%,
+        rgba(56, 189, 248, 0.3) 100%
+      );
+      /* Optional: Replace with a waveform mask asset.
+         mask-image: url('assets/waveform-placeholder.svg'); */
+      mask-size: cover;
+      mask-repeat: no-repeat;
+      mask-position: center;
+      -webkit-mask-size: cover;
+      -webkit-mask-repeat: no-repeat;
+      -webkit-mask-position: center;
+    }
+
+    .waveform-fallback {
+      background-image: repeating-linear-gradient(
+        to right,
+        rgba(56, 189, 248, 0.18),
+        rgba(56, 189, 248, 0.18) 2px,
+        transparent 2px,
+        transparent 4px
+      );
+    }
+
+    .transition-soft {
+      transition: all 180ms ease-out;
+    }
+  </style>
+</head>
+
+<body class="font-sans antialiased">
+  <div class="pointer-events-none fixed inset-x-0 top-0 z-0 flex justify-center blur-3xl opacity-60">
+    <div class="h-72 w-[40rem] bg-gradient-to-r from-sf-blue via-sf-purple to-sf-orange mix-blend-screen"></div>
+  </div>
+
+  <div class="relative z-10 min-h-screen">
+    <header class="sticky top-0 z-30 border-b border-sf-border/80 bg-black/70 backdrop-blur-xl">
+      <nav class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4 lg:px-8" aria-label="Static N Flow main">
+        <a href="#hero" class="flex items-center gap-3 group">
+          <div class="relative flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-sf-blue via-sf-purple to-sf-orange shadow-sf-glow">
+            <span class="font-display text-lg font-extrabold tracking-tight text-slate-950">SF</span>
+          </div>
+          <div class="flex flex-col">
+            <span class="font-display text-lg font-semibold tracking-[0.16em] text-slate-100 uppercase">Static N Flow</span>
+            <span class="text-xs font-medium text-slate-400 tracking-wide">Story-led Mix Engineering</span>
+          </div>
+        </a>
+
+        <div class="hidden items-center gap-8 text-sm font-medium text-slate-300 md:flex">
+          <a href="#hero" class="hover:text-sf-blue transition-soft">Story</a>
+          <a href="#ab-test" class="hover:text-sf-purple transition-soft">A/B Showcase</a>
+          <a href="#contact" class="hover:text-sf-orange transition-soft">Start Your Flow</a>
+        </div>
+
+        <a
+          href="#contact"
+          class="hidden rounded-full bg-gradient-to-r from-sf-blue via-sf-purple to-sf-orange px-4 py-2.5 text-xs font-semibold uppercase tracking-[0.18em] text-slate-950 shadow-sf-glow md:inline-flex items-center gap-2 transition-soft hover:brightness-110"
+        >
+          <span>Get a Quote</span>
+        </a>
+      </nav>
+    </header>
+
+    <main id="hero" class="mx-auto max-w-6xl px-6 pt-12 pb-20 lg:px-8 lg:pt-16">
+      <section class="grid gap-10 md:grid-cols-[1.4fr,1fr] md:items-center">
+        <div>
+          <p class="inline-flex items-center gap-2 rounded-full border border-sf-border/70 bg-slate-950/70 px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.3em] text-slate-400">
+            From demo chaos to release-ready clarity
+          </p>
+
+          <h1 class="mt-5 font-display text-4xl font-extrabold tracking-tight text-slate-100 sm:text-5xl lg:text-6xl">
+            From Raw Waves
+            <span class="block bg-gradient-to-r from-sf-blue via-sf-purple to-sf-orange bg-clip-text text-transparent">
+              to Polished Flow
+            </span>
+          </h1>
+
+          <p class="mt-6 max-w-xl text-sm leading-relaxed text-slate-300">
+            Static N Flow is where technical mix precision meets narrative intent.
+            We translate the emotional arc of your record into sculpted frequencies, phase-coherent depth, and a
+            deliberate sense of motion that holds listeners from the first transient to the final tail.
+          </p>
+
+          <p class="mt-4 max-w-xl text-sm leading-relaxed text-slate-400">
+            Every project starts with your story: references, roughs, voice notes, and vision. We then
+            build a mix architecture that serves that story — not just louder, but clearer, wider, and more
+            intentional. Scroll down to A/B our work in real time.
+          </p>
+
+          <div class="mt-8 flex flex-wrap items-center gap-4">
+            <a
+              href="#ab-test"
+              class="group inline-flex items-center gap-2 rounded-full border border-sf-blue/60 bg-slate-950/80 px-5 py-3 text-xs font-semibold uppercase tracking-[0.25em] text-sf-blue transition-soft hover:bg-sf-blue/10"
+            >
+              <span>Hear the Difference</span>
+              <span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-sf-blue/10 text-sf-blue group-hover:translate-x-0.5 transition-transform">
+                ▶
+              </span>
+            </a>
+
+            <div class="flex flex-col text-[0.72rem] text-slate-400">
+              <span class="font-semibold text-slate-300">Hybrid mix environment</span>
+              <span>Analog saturation. Surgical digital control. Translation-checked across systems.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="relative rounded-3xl border border-sf-border/80 bg-slate-950/80 p-4 shadow-[0_22px_60px_rgba(0,0,0,0.85)] backdrop-blur-sm">
+          <div class="relative overflow-hidden rounded-2xl border border-sf-border/80 bg-gradient-to-br from-slate-900/80 via-slate-900/20 to-slate-900/80">
+            <div class="h-52 bg-gradient-to-tr from-sf-purple/30 via-transparent to-sf-blue/40"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/80 to-transparent"></div>
+
+            <div class="relative p-4">
+              <p class="text-[0.72rem] font-semibold uppercase tracking-[0.25em] text-sf-blue">Mix Environment</p>
+              <p class="mt-2 text-sm font-medium text-slate-100">
+                Translation-focused, reference-calibrated room designed for modern streaming platforms.
+              </p>
+
+              <dl class="mt-4 grid grid-cols-2 gap-3 rounded-xl border border-sf-border/70 bg-black/40 p-3 text-[0.7rem] text-slate-300">
+                <div>
+                  <dt class="text-slate-500">Genres</dt>
+                  <dd class="mt-1 font-semibold text-slate-100">Alt / Pop / Rock / Electronic / More. </dd>
+                </div>
+                <div>
+                  <dt class="text-slate-500">Focus</dt>
+                  <dd class="mt-1 font-semibold text-slate-100">Emotion-first fidelity</dd>
+                </div>
+                <div>
+                  <dt class="text-slate-500">Deliverables</dt>
+                  <dd class="mt-1">Streaming, stems, instrumentals</dd>
+                </div>
+                <div>
+                  <dt class="text-slate-500">Turnaround</dt>
+                  <dd class="mt-1">&approx; 3–7 days per record</dd>
+                </div>
+              </dl>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="ab-test" class="mt-20 lg:mt-28">
+        <header class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+          <div>
+            <p class="text-[0.7rem] font-semibold uppercase tracking-[0.35em] text-sf-purple">A/B Audio Comparison</p>
+            <h2 class="mt-2 font-display text-2xl font-semibold tracking-tight text-slate-100 sm:text-3xl">
+              Before &amp; After — perfectly time-locked.
+            </h2>
+            <p class="mt-3 max-w-xl text-sm text-slate-300">
+              Flip between the raw mix and the Static N Flow treatment without losing a single millisecond.
+              What you hear is the exact same moment, rebuilt with clarity, width, and impact.
+            </p>
+          </div>
+
+          <p class="text-xs text-slate-400 max-w-sm">
+            Use headphones or studio monitors for the most honest A/B experience.
+          </p>
+        </header>
+
+        <div class="mt-8 rounded-3xl border border-sf-border/80 bg-sf-surface/90 p-5 shadow-[0_24px_70px_rgba(0,0,0,0.9)] lg:p-7 backdrop-blur-md">
+          <div class="grid gap-6 lg:grid-cols-[1.1fr,auto,1.1fr] lg:items-center">
+            <div class="relative rounded-2xl border border-sf-border/80 bg-gradient-to-b from-slate-950 to-slate-900/80 p-4">
+              <div class="flex items-center justify-between gap-3">
+                <div class="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em]">
+                  <span class="inline-flex h-2 w-2 rounded-full bg-slate-500 shadow-[0_0_12px_rgba(148,163,184,0.8)]"></span>
+                  <span class="text-slate-300">Before</span>
+                </div>
+                <span class="rounded-full bg-slate-900/70 px-2 py-1 text-[0.65rem] text-slate-400">Raw mix reference</span>
+              </div>
+              <div class="mt-4 h-28 rounded-xl bg-slate-900/90 waveform-fallback waveform-placeholder opacity-90"></div>
+            </div>
+
+            <div class="flex flex-col items-center justify-center gap-4">
+              <button
+                id="toggleMix"
+                type="button"
+                class="group relative inline-flex items-center gap-3 rounded-full border border-sf-border/80 bg-black/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-200 shadow-[0_18px_40px_rgba(0,0,0,0.8)] transition-soft hover:border-sf-purple/70 hover:bg-sf-surface-soft"
+                aria-pressed="false"
+              >
+                <span class="relative inline-flex h-7 w-7 items-center justify-center rounded-full bg-gradient-to-br from-sf-blue via-sf-purple to-sf-orange text-slate-950 shadow-sf-glow transition-soft group-hover:scale-105">
+                  ⬌
+                </span>
+                <span id="toggleMixLabel" class="text-[0.65rem]">
+                  Toggle Mix <span class="text-slate-500">/ Hearing: Raw</span>
+                </span>
+              </button>
+
+              <p class="max-w-[12rem] text-center text-[0.68rem] text-slate-400">
+                Time-locked switch with a 50ms crossfade to prevent clicks.
+              </p>
+            </div>
+
+            <div class="relative rounded-2xl border border-sf-border/80 bg-gradient-to-b from-slate-950 to-slate-900/80 p-4">
+              <div class="flex items-center justify-between gap-3">
+                <div class="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em]">
+                  <span class="inline-flex h-2 w-2 rounded-full bg-sf-orange shadow-[0_0_12px_rgba(249,115,22,0.9)]"></span>
+                  <span class="text-slate-300">After</span>
+                </div>
+                <span class="rounded-full bg-gradient-to-r from-sf-blue/20 via-sf-purple/25 to-sf-orange/20 px-2 py-1 text-[0.65rem] text-sf-orange">
+                  Static N Flow mix
+                </span>
+              </div>
+              <div class="mt-4 h-28 rounded-xl bg-slate-900/90 waveform-fallback waveform-placeholder opacity-90"></div>
+            </div>
+          </div>
+
+          <div class="mt-7 flex flex-col gap-4 rounded-2xl border border-sf-border/80 bg-slate-950/80 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
+            <div class="flex items-center gap-4">
+              <button
+                id="playPause"
+                type="button"
+                class="inline-flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-sf-blue via-sf-purple to-sf-orange text-slate-950 shadow-sf-glow transition-soft hover:brightness-110"
+              >
+                ▶
+              </button>
+
+              <div class="flex flex-col">
+                <span id="activeSourceLabel" class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-300">
+                  Source: Raw Mix
+                </span>
+                <span class="mt-1 text-[0.7rem] text-slate-400">
+                  Single transport controls both versions for an honest comparison.
+                </span>
+              </div>
+            </div>
+
+            <div class="flex w-full flex-col gap-1 sm:max-w-md">
+              <input id="seekBar" type="range" min="0" max="100" value="0" step="0.1" class="w-full cursor-pointer accent-sf-purple" />
+              <div class="flex items-center justify-between text-[0.68rem] text-slate-400">
+                <span id="currentTime">0:00</span>
+                <span id="duration">0:00</span>
+              </div>
+            </div>
+          </div>
+
+          <p class="mt-4 text-[0.7rem] text-slate-500">
+           
+            <code class="rounded bg-slate-900/60 px-1.5 py-0.5 text-[0.7rem] text-slate-300"></code>
+            
+            <code class="rounded bg-slate-900/60 px-1.5 py-0.5 text-[0.7rem] text-slate-300"></code>.
+           
+          </p>
+        </div>
+      </section>
+
+      <section id="contact" class="mt-20 border-t border-sf-border/80 pt-12 lg:mt-28 lg:pt-16">
+        <div class="grid gap-10 md:grid-cols-[1.3fr,1fr] md:items-center">
+          <div>
+            <p class="text-[0.7rem] font-semibold uppercase tracking-[0.35em] text-sf-blue">Contact</p>
+            <h2 class="mt-2 font-display text-2xl font-semibold tracking-tight text-slate-100 sm:text-3xl">
+              Ready to sculpt your next record?
+            </h2>
+            <p class="mt-3 max-w-xl text-sm text-slate-300">
+              Share your roughs, references, deadlines, and any sonic non‑negotiables. We&apos;ll respond with
+              a tailored quote, a proposed mix approach, and realistic timelines.
+            </p>
+
+            <div class="mt-6 flex flex-wrap items-center gap-5">
+              <a
+                href="mailto:staticnflow@outlook.com?subject=Mix%20Inquiry%20-%20Static%20N%20Flow"
+                class="inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-sf-blue via-sf-purple to-sf-orange px-6 py-3 text-[0.7rem] font-semibold uppercase tracking-[0.25em] text-slate-950 shadow-sf-glow transition-soft hover:brightness-110"
+              >
+                <!-- Primary conversion button -->
+                Get a Quote
+              </a>
+
+             <p class="text-[0.7rem] text-slate-400">We are on the way.</p>
+            </div>
+          </div>
+
+          <div class="rounded-2xl border border-sf-border/80 bg-sf-surface/90 p-5 shadow-[0_20px_40px_rgba(0,0,0,0.9)] backdrop-blur-md">
+            <div class="space-y-4 text-sm">
+              <div>
+                <p class="text-[0.7rem] font-semibold uppercase tracking-[0.28em] text-slate-500">Direct Email</p>
+                <a href="mailto:staticnflow@outlook.com" class="mt-1 block text-slate-100 hover:text-sf-blue transition-soft">
+                  staticnflow@outlook.com
+                </a>
+              </div>
+
+              <div>
+                <p class="text-[0.7rem] font-semibold uppercase tracking-[0.28em] text-slate-500">Social</p>
+                <div class="mt-2 flex flex-wrap items-center gap-3 text-sm">
+                  <!-- Replace `#` with your real profile URLs -->
+                  <a href="#" class="inline-flex items-center gap-2 rounded-full border border-sf-border/80 bg-slate-950/80 px-3 py-1.5 text-[0.7rem] text-slate-200 transition-soft hover:border-sf-orange/70 hover:text-sf-orange">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-4 w-4" aria-hidden="true">
+                      <path fill="currentColor" d="M17.5 9.1c-.5 0-.9.1-1.3.2A4.8 4.8 0 0 0 11 5a4.8 4.8 0 0 0-4.5 3.1h-.1A3.5 3.5 0 0 0 3 11.6 3.4 3.4 0 0 0 6.4 15H17a3 3 0 0 0 .5-5.9Z"/>
+                    </svg>
+                    <span>SoundCloud</span>
+                  </a>
+
+                  <a href="#" class="inline-flex items-center gap-2 rounded-full border border-sf-border/80 bg-slate-950/80 px-3 py-1.5 text-[0.7rem] text-slate-200 transition-soft hover:border-sf-purple/70 hover:text-sf-purple">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-4 w-4" aria-hidden="true">
+                      <rect width="14" height="14" x="5" y="5" rx="4" ry="4" fill="none" stroke="currentColor" stroke-width="1.6"/>
+                      <circle cx="12" cy="12" r="3.2" fill="none" stroke="currentColor" stroke-width="1.6"/>
+                      <circle cx="16.6" cy="7.4" r="0.9" fill="currentColor"/>
+                    </svg>
+                    <span>Instagram</span>
+                  </a>
+
+                  <a href="#" class="inline-flex items-center gap-2 rounded-full border border-sf-border/80 bg-slate-950/80 px-3 py-1.5 text-[0.7rem] text-slate-200 transition-soft hover:border-sf-blue/70 hover:text-sf-blue">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-4 w-4" aria-hidden="true">
+                      <path fill="currentColor" d="M17.5 4h2.1l-4.6 5.3L20 20h-4.9l-3.1-5-3.6 4H6.3l4.9-5.5L4.5 4h5l2.8 4.5L17.5 4Zm-1.7 14h1.2L8.3 5.9H7Z"/>
+                    </svg>
+                    <span>X</span>
+                  </a>
+                </div>
+              </div>
+
+              <div class="pt-2 text-[0.7rem] text-slate-500">
+                <p>Hybrid studio workflow. Remote mix &amp; review worldwide.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="mt-10 flex flex-col items-center justify-between gap-3 text-[0.68rem] text-slate-500 md:flex-row">
+          <p>&copy; <span id="year"></span> Static N Flow. All rights reserved.</p>
+          <p>Delivering story-led mixes for artists who care about the details.</p>
+        </footer>
+      </section>
+    </main>
+  </div>
+
+  <!-- A/B Audio Logic – Vanilla JS + Web Audio crossfade -->
+<script>
+  // ------------------------------------------------------------
+  // AUDIO ASSETS (REPLACE THESE PATHS WITH YOUR FILES)
+  // ------------------------------------------------------------
+  const beforeSrc = 'audio/before.mp3'; // e.g. './assets/audio/your-song-before.mp3'
+  const afterSrc  = 'audio/after.mp3';  // e.g. './assets/audio/your-song-after.mp3'
+
+  const beforeAudio = new Audio(beforeSrc);
+  const afterAudio  = new Audio(afterSrc);
+
+  beforeAudio.preload = 'auto';
+  afterAudio.preload  = 'auto';
+
+  // Initial volumes: A on, B muted
+  beforeAudio.volume = 1;
+  afterAudio.volume  = 0;
+
+  const CROSSFADE_MS = 50; // 50 ms volume crossfade
+
+  let currentTrack   = 'before';  // 'before' | 'after'
+  let isSeeking      = false;
+  let isCrossfading  = false;
+  let isPlaying      = false;     // true when transport is playing (both elements run)
+
+  const toggleMixBtn      = document.getElementById('toggleMix');
+  const toggleMixLabel    = document.getElementById('toggleMixLabel');
+  const playPauseBtn      = document.getElementById('playPause');
+  const seekBar           = document.getElementById('seekBar');
+  const currentTimeEl     = document.getElementById('currentTime');
+  const durationEl        = document.getElementById('duration');
+  const activeSourceLabel = document.getElementById('activeSourceLabel');
+  const yearEl            = document.getElementById('year');
+
+  yearEl.textContent = new Date().getFullYear();
+
+  function getActiveAudio() {
+    return currentTrack === 'before' ? beforeAudio : afterAudio;
+  }
+
+  function getInactiveAudio() {
+    return currentTrack === 'before' ? afterAudio : beforeAudio;
+  }
+
+  function formatTime(seconds) {
+    if (!isFinite(seconds)) return '0:00';
+    const m = Math.floor(seconds / 60);
+    const s = Math.floor(seconds % 60);
+    return `${m}:${s.toString().padStart(2, '0')}`;
+  }
+
+  function updateLabels() {
+    const hearingText = currentTrack === 'before' ? 'Hearing: Raw' : 'Hearing: Static N Flow';
+    toggleMixLabel.innerHTML = `Toggle Mix <span class="text-slate-500">/ ${hearingText}</span>`;
+    toggleMixBtn.setAttribute('aria-pressed', String(currentTrack === 'after'));
+    activeSourceLabel.textContent =
+      currentTrack === 'before' ? 'Source: Raw Mix' : 'Source: Static N Flow Mix';
+  }
+
+  function updateTransportUI() {
+    const active   = getActiveAudio();
+    const duration = active.duration || 0;
+    const current  = active.currentTime || 0;
+
+    durationEl.textContent    = formatTime(duration);
+    currentTimeEl.textContent = formatTime(current);
+
+    if (!isSeeking && duration > 0) {
+      const percent = (current / duration) * 100;
+      seekBar.value = isFinite(percent) ? percent : 0;
+    }
+
+    playPauseBtn.textContent = isPlaying ? '❚❚' : '▶';
+    updateLabels();
+  }
+
+  // ------------------------------------------------------------
+  // PLAY / PAUSE – both elements always play together when "playing"
+  // ------------------------------------------------------------
+  playPauseBtn.addEventListener('click', async () => {
+    const active   = getActiveAudio();
+    const inactive = getInactiveAudio();
+
+    if (!isPlaying) {
+      // Sync times before starting
+      const t = isFinite(active.currentTime) ? active.currentTime : 0;
+      beforeAudio.currentTime = t;
+      afterAudio.currentTime  = t;
+
+      try {
+        // Play BOTH so they stay sample‑locked; volume decides what you hear
+        await Promise.allSettled([beforeAudio.play(), afterAudio.play()]);
+        isPlaying = true;
+      } catch (err) {
+        console.warn('Playback blocked:', err);
+      }
+    } else {
+      beforeAudio.pause();
+      afterAudio.pause();
+      isPlaying = false;
+    }
+
+    updateTransportUI();
+  });
+
+  // ------------------------------------------------------------
+  // SEEK BAR – update both tracks to stay time‑locked
+  // ------------------------------------------------------------
+  seekBar.addEventListener('input', () => {
+    const active   = getActiveAudio();
+    const duration = active.duration || 0;
+    const percent  = Number(seekBar.value) / 100;
+    const newTime  = duration * percent;
+
+    isSeeking = true;
+
+    if (isFinite(newTime)) {
+      beforeAudio.currentTime = newTime;
+      afterAudio.currentTime  = newTime;
+      currentTimeEl.textContent = formatTime(newTime);
+    }
+  });
+
+  seekBar.addEventListener('change', () => {
+    isSeeking = false;
+  });
+
+  // ------------------------------------------------------------
+  // TIME UPDATE – only uses active track for UI
+  // ------------------------------------------------------------
+  function handleTimeUpdate() {
+    if (!isCrossfading) {
+      // Keep inactive roughly aligned if user scrubbed via native controls (defensive)
+      const active   = getActiveAudio();
+      const inactive = getInactiveAudio();
+      if (isFinite(active.currentTime)) inactive.currentTime = active.currentTime;
+    }
+    updateTransportUI();
+  }
+
+  beforeAudio.addEventListener('timeupdate', handleTimeUpdate);
+  // (afterAudio is always in sync; no need for a second listener)
+
+  beforeAudio.addEventListener('loadedmetadata', updateTransportUI);
+  afterAudio.addEventListener('loadedmetadata', updateTransportUI);
+
+  beforeAudio.addEventListener('ended', () => {
+    isPlaying = false;
+    afterAudio.pause();
+    updateTransportUI();
+  });
+  afterAudio.addEventListener('ended', () => {
+    isPlaying = false;
+    beforeAudio.pause();
+    updateTransportUI();
+  });
+
+  // ------------------------------------------------------------
+  // 50 ms VOLUME CROSSFade – NO time change, NO play/pause
+  // ------------------------------------------------------------
+  function crossfadeTo(nextTrack) {
+    if (isCrossfading) return;
+
+    const wasPlaying = isPlaying;
+
+    // If paused, just switch which source is "selected" and set volumes instantly
+    if (!wasPlaying) {
+      currentTrack = nextTrack;
+      beforeAudio.volume = nextTrack === 'before' ? 1 : 0;
+      afterAudio.volume  = nextTrack === 'after'  ? 1 : 0;
+      updateTransportUI();
+      return;
+    }
+
+    isCrossfading = true;
+
+    const steps    = 10;                    // 50 ms / 10 = 5 ms per step
+    const interval = CROSSFADE_MS / steps;
+    let   step     = 0;
+
+    // Starting volumes
+    if (nextTrack === 'before') {
+      // currently hearing "after": fade after → 0, before → 1
+      beforeAudio.volume = 0;
+      afterAudio.volume  = 1;
+    } else {
+      beforeAudio.volume = 1;
+      afterAudio.volume  = 0;
+    }
+
+    // Ensure both are playing during the overlap (should already be if isPlaying)
+    if (!beforeAudio.paused) beforeAudio.play().catch(() => {});
+    if (!afterAudio.paused)  afterAudio.play().catch(() => {});
+
+    const fade = setInterval(() => {
+      step++;
+      const progress = step / steps;
+
+      if (nextTrack === 'before') {
+        beforeAudio.volume = progress;       // fade in
+        afterAudio.volume  = 1 - progress;   // fade out
+      } else {
+        beforeAudio.volume = 1 - progress;
+        afterAudio.volume  = progress;
+      }
+
+      if (step >= steps) {
+        clearInterval(fade);
+
+        currentTrack = nextTrack;
+        beforeAudio.volume = nextTrack === 'before' ? 1 : 0;
+        afterAudio.volume  = nextTrack === 'after'  ? 1 : 0;
+
+        // Do NOT pause either one here; both keep running so future toggles are instantaneous
+        isCrossfading = false;
+        updateTransportUI();
+      }
+    }, interval);
+  }
+
+  // ------------------------------------------------------------
+  // TOGGLE MIX BUTTON
+  // ------------------------------------------------------------
+  toggleMixBtn.addEventListener('click', () => {
+    const next = currentTrack === 'before' ? 'after' : 'before';
+    crossfadeTo(next);
+  });
+
+  // Initial UI paint
+  updateTransportUI();
+</script>
+</body>
+</html>
